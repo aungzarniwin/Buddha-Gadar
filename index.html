@@ -153,19 +153,39 @@
 
         <!-- Mantra Display Card -->
         <section class="w-full bg-white/95 backdrop-blur-sm border-2 border-amber-300/80 rounded-2xl p-3.5 shadow-sm relative overflow-hidden">
+            <div class="text-center space-y-1 mb-3">
+                <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-100 text-maroon-900 text-[11px] font-bold">သရဏဂုံသုံးပါး ဂါထာတော်</span>
+                <p class="text-base sm:text-lg font-bold text-maroon-900 leading-relaxed pt-1">
+                    ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ<br>
+                    ဓမ္မံ သရဏံ ဂစ္ဆာမိ<br>
+                    သံဃံ သရဏံ ဂစ္ဆာမိ
+                </p>
+            </div>
 
-                <!-- Total Time for 3,000 -->
-                <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
-                    <p class="text-[11px] text-stone-500">၃,၀၀၀ ကြိမ် စုစုပေါင်း</p>
-                    <p id="totalEstTimeDisplay" class="text-sm sm:text-base font-bold text-maroon-900 mt-0.5">၃ နာရီ ၂၀ မိနစ်</p>
-                    <p class="text-[10px] text-stone-400">ဆက်တိုက်ကြာချိန်</p>
+            <!-- Pace & Time Estimation Grid -->
+            <div class="bg-amber-50/90 rounded-xl p-2.5 border border-amber-200/80">
+                <div class="flex items-center justify-between mb-2">
+                    <span id="paceStatusBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900 font-medium">ခန့်မှန်း ပုံမှန်နှုန်း</span>
+                    <div class="text-right">
+                        <span id="paceRateDisplay" class="text-xs font-bold text-maroon-900">၁၅ ကြိမ်/မိနစ်</span>
+                        <span id="secPerRepDisplay" class="text-[10px] text-stone-500 ml-1">(၁ ခေါက် ~ ၄.၀ စက္ကန့်)</span>
+                    </div>
                 </div>
 
-                <!-- Remaining Time -->
-                <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
-                    <p class="text-[11px] text-stone-500">ကျန်ရှိ အချိန်</p>
-                    <p id="remainingEstTimeDisplay" class="text-sm sm:text-base font-bold text-emerald-700 mt-0.5">၃ နာရီ ၂၀ မိနစ်</p>
-                    <p id="elapsedTimeDisplay" class="text-[10px] text-stone-400">ရွတ်ပြီး: ၀ မိနစ်</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <!-- Total Time for 3,000 -->
+                    <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
+                        <p class="text-[11px] text-stone-500">၃,၀၀၀ ကြိမ် စုစုပေါင်း</p>
+                        <p id="totalEstTimeDisplay" class="text-sm sm:text-base font-bold text-maroon-900 mt-0.5">၃ နာရီ ၂၀ မိနစ်</p>
+                        <p class="text-[10px] text-stone-400">ဆက်တိုက်ကြာချိန်</p>
+                    </div>
+
+                    <!-- Remaining Time -->
+                    <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
+                        <p class="text-[11px] text-stone-500">ကျန်ရှိ အချိန်</p>
+                        <p id="remainingEstTimeDisplay" class="text-sm sm:text-base font-bold text-emerald-700 mt-0.5">၃ နာရီ ၂၀ မိနစ်</p>
+                        <p id="elapsedTimeDisplay" class="text-[10px] text-stone-400">ရွတ်ပြီး: ၀ မိနစ်</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -818,6 +838,18 @@
                                 ${isComplete ? '✓ အဓိဋ္ဌာန် ၃,၀၀၀ ပြည့်မြောက်သည်' : `ပြည့်ရန် ${toBurmeseNum(DAILY_TARGET - count)} ကြိမ် လိုသေးသည်`}
                             </p>
                             <p class="text-[11px] text-stone-400">
+                                ကြာမြင့်ချိန်: ${formatBurmeseDuration(activeSec)}
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-base font-bold ${isComplete ? 'text-emerald-700' : 'text-maroon-900'}">${toBurmeseNum(count)}</span>
+                            <span class="text-xs text-stone-400 block">/ ၃,၀၀၀ ကြိမ်</span>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+
             const remainingDaysCount = Math.max(TOTAL_TARGET_DAYS - completedDaysCount, 0);
             document.getElementById('totalAllTimeCount').textContent = `စုစုပေါင်း: ${toBurmeseNum(totalAllTime)} / ၈၄,၀၀၀ ကြိမ်`;
             document.getElementById('totalCompletedDaysModal').textContent = `ပြီးစီးရက်: ${toBurmeseNum(completedDaysCount)} ရက် | ကျန်ရှိရက်: ${toBurmeseNum(remainingDaysCount)} ရက်`;
