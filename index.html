@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>သရဏဂုံသုံးပါး အဓိဋ္ဌာန် ၃၀၀၀ ကြိမ် ရွတ်ဆိုမှု မှတ်တမ်း</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Padauk & Noto Sans Myanmar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Tone.js for soothing meditation chime sounds -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        myanmar: ['"Noto Sans Myanmar"', '"Padauk"', 'sans-serif'],
+                    },
+                    colors: {
+                        maroon: {
+                            800: '#5c1916',
+                            900: '#42100e',
+                            950: '#290807',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Sans Myanmar', 'Padauk', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        /* Smooth circular progress animation */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.3s ease-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Ripple animation on tap */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.75; }
+            100% { transform: scale(1.22); opacity: 0; }
+        }
+        .animate-pulse-ring {
+            animation: pulse-ring 0.55s cubic-bezier(0.24, 0, 0.38, 1) forwards;
+        }
+
+        /* Custom subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(217, 119, 6, 0.4);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 min-h-screen text-stone-800 flex flex-col justify-between">
+
+    <!-- Top Header -->
+    <header class="w-full bg-maroon-900 text-amber-50 shadow-md sticky top-0 z-30">
+        <div class="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+                <!-- Dharma / Lotus Icon SVG -->
+                <div class="w-9 h-9 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C9.5 6 7 9.5 7 13.5C7 16.5 9.2 19 12 19C14.8 19 17 16.5 17 13.5C17 9.5 14.5 6 12 2ZM12 17C10.3 17 9 15.4 9 13.5C9 11.2 10.5 8.7 12 6.2C13.5 8.7 15 11.2 15 13.5C15 15.4 13.7 17 12 17ZM4.5 11C2.5 12.5 1.5 14.8 2 17C3.8 16.5 5.5 15.2 6.3 13.5C5.9 12.6 5.3 11.7 4.5 11ZM19.5 11C18.7 11.7 18.1 12.6 17.7 13.5C18.5 15.2 20.2 16.5 22 17C22.5 14.8 21.5 12.5 19.5 11ZM12 20.5C9.5 20.5 7.2 19.6 5.5 18.2C6.8 20.5 9.2 22 12 22C14.8 22 17.2 20.5 18.5 18.2C16.8 19.6 14.5 20.5 12 20.5Z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold tracking-wide text-amber-200 leading-tight">အဓိဋ္ဌာန် ၃,၀၀၀ ကြိမ်</h1>
+                    <p id="currentDateDisplay" class="text-xs text-amber-100/80">ရက်စွဲ...</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <!-- Sound Toggle Button -->
+                <button id="soundToggleBtn" onclick="toggleSound()" class="p-2.5 rounded-full bg-maroon-800 hover:bg-amber-800/60 text-amber-200 transition active:scale-95" title="အသံ အဖွင့်/အပိတ်">
+                    <svg id="soundOnIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                    </svg>
+                    <svg id="soundOffIcon" class="w-5 h-5 hidden text-amber-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
+                    </svg>
+                </button>
+
+                <!-- History Modal Trigger -->
+                <button onclick="openHistoryModal()" class="flex items-center space-x-1.5 px-3 py-2 rounded-full bg-maroon-800 hover:bg-amber-800/60 text-amber-200 transition active:scale-95 text-xs font-medium border border-amber-500/30" title="နေ့စဉ်မှတ်တမ်းများ">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                    </svg>
+                    <span>မှတ်တမ်း</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 w-full max-w-lg mx-auto px-4 py-4 flex flex-col items-center justify-between space-y-4">
+
+        <!-- Mantra Display Card -->
+        <section class="w-full bg-white/95 backdrop-blur-sm border-2 border-amber-300/80 rounded-2xl p-4 shadow-md relative overflow-hidden">
+            <!-- Decorative corner accents -->
+            <div class="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-amber-500/40 rounded-tl-xl"></div>
+            <div class="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-amber-500/40 rounded-tr-xl"></div>
+            <div class="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-amber-500/40 rounded-bl-xl"></div>
+            <div class="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-amber-500/40 rounded-br-xl"></div>
+
+            <div class="text-center space-y-1.5">
+                <span class="inline-block px-3 py-0.5 bg-amber-100 text-amber-800 text-[11px] font-semibold rounded-full border border-amber-300">
+                    သရဏဂုံသုံးပါး ဂါထာတော်
+                </span>
+                <p class="text-lg sm:text-xl font-bold text-maroon-900 leading-relaxed py-1 tracking-wide">
+                    ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ<br>
+                    ဓမ္မံ သရဏံ ဂစ္ဆာမိ<br>
+                    သံဃံ သရဏံ ဂစ္ဆာမိ
+                </p>
+            </div>
+        </section>
+
+        <!-- Pace & Duration Estimation Card (ဆက်တိုက်ရွတ်ဆိုနှုန်းနှင့် ကြာမြင့်ချိန် တွက်ချက်မှု) -->
+        <section class="w-full bg-amber-900/5 border border-amber-300/90 rounded-2xl p-3.5 shadow-xs">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-maroon-900 flex items-center space-x-1.5">
+                    <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>ဆက်တိုက်ရွတ်ဆိုနှုန်းနှင့် ကြာမြင့်ချိန် ခန့်မှန်းချက်</span>
+                </span>
+                <span id="paceStatusBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900 font-medium">
+                    ပုံမှန်နှုန်း
+                </span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <!-- Current Rate -->
+                <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
+                    <p class="text-[11px] text-stone-500">ရွတ်ဆိုနှုန်း</p>
+                    <p id="paceRateDisplay" class="text-sm sm:text-base font-bold text-amber-800 mt-0.5">၁၅ ကြိမ်/မိနစ်</p>
+                    <p id="secPerRepDisplay" class="text-[10px] text-stone-400">(၁ ခေါက် ~ ၄.၀ စက္ကန့်)</p>
+                </div>
+
+                <!-- Total Time for 3,000 -->
+                <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
+                    <p class="text-[11px] text-stone-500">၃,၀၀၀ ကြိမ် စုစုပေါင်း</p>
+                    <p id="totalEstTimeDisplay" class="text-sm sm:text-base font-bold text-maroon-900 mt-0.5">၃ နာရီ ၂၀ မိနစ်</p>
+                    <p class="text-[10px] text-stone-400">ဆက်တိုက်ကြာချိန်</p>
+                </div>
+
+                <!-- Remaining Time -->
+                <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
+                    <p class="text-[11px] text-stone-500">ကျန်ရှိ အချိန်</p>
+                    <p id="remainingEstTimeDisplay" class="text-sm sm:text-base font-bold text-emerald-700 mt-0.5">၃ နာရီ ၂၀ မိနစ်</p>
+                    <p id="elapsedTimeDisplay" class="text-[10px] text-stone-400">ရွတ်ပြီး: ၀ မိနစ်</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily Status Banner (Shows when 3,000 is reached) -->
+        <div id="goalCompletedBanner" class="hidden w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-2xl p-3 shadow-md flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-lg shrink-0">
+                    ✨
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm">သာဓု! သာဓု! သာဓု! အဓိဋ္ဌာန် အောင်မြင်ပါပြီ</h3>
+                    <p class="text-xs text-emerald-100">ယနေ့အတွက် ၃,၀၀၀ ကြိမ် ပြည့်မြောက်အောင် ရွတ်ဆိုပြီးပါပြီ။</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Counter Dial -->
+        <section class="flex-1 flex flex-col items-center justify-center w-full py-1">
+            <div class="relative flex items-center justify-center">
+                <!-- Ripple Effect Layer -->
+                <div id="rippleContainer" class="absolute inset-0 flex items-center justify-center pointer-events-none"></div>
+
+                <!-- SVG Circular Progress -->
+                <svg class="w-64 h-64 sm:w-72 sm:h-72 drop-shadow-md" viewBox="0 0 260 260">
+                    <!-- Background Circle -->
+                    <circle class="text-amber-200/70" stroke-width="14" stroke="currentColor" fill="transparent" r="112" cx="130" cy="130" />
+                    <!-- Progress Circle -->
+                    <circle id="progressRing" class="progress-ring__circle text-amber-600" stroke-width="14" stroke-dasharray="703.71" stroke-dashoffset="703.71" stroke-linecap="round" stroke="currentColor" fill="transparent" r="112" cx="130" cy="130" />
+                </svg>
+
+                <!-- Main Tap Button inside the Circle -->
+                <button id="tapCounterBtn" onclick="incrementCount()" class="absolute w-52 h-52 sm:w-58 sm:h-58 rounded-full bg-gradient-to-b from-amber-500 via-amber-600 to-maroon-900 text-white shadow-2xl border-4 border-amber-200 flex flex-col items-center justify-center transition-transform duration-100 active:scale-95 focus:outline-none cursor-pointer group">
+                    <span class="text-xs uppercase tracking-wider text-amber-200 font-medium">ယနေ့ ရွတ်ဆိုပြီး</span>
+                    <div class="flex items-baseline space-x-1 my-0.5">
+                        <span id="currentCountDisplay" class="text-5xl sm:text-6xl font-bold text-white drop-shadow">၀</span>
+                        <span class="text-base sm:text-lg font-semibold text-amber-200">/ ၃,၀၀၀</span>
+                    </div>
+                    <span id="malaRoundsText" class="text-xs text-amber-200/95 font-medium">
+                        ပုတီးပတ်: ၀ ပတ် (၁၀၈ လုံး)
+                    </span>
+                    <span id="remainingText" class="mt-1.5 px-3 py-0.5 rounded-full bg-black/25 text-xs text-amber-100">
+                        ကျန်ရှိ - ၃,၀၀၀ ကြိမ်
+                    </span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Bottom Action Controls -->
+        <section class="w-full grid grid-cols-3 gap-2.5 pb-2">
+            <!-- Undo (-1) Button -->
+            <button onclick="decrementCount()" class="flex items-center justify-center space-x-1 py-3 px-2 bg-white hover:bg-amber-50 active:bg-amber-100 text-stone-700 font-medium rounded-xl border border-amber-300 shadow-sm transition active:scale-95 text-xs sm:text-sm">
+                <svg class="w-4 h-4 text-amber-700 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                </svg>
+                <span>၁ ကြိမ်နုတ်</span>
+            </button>
+
+            <!-- Completed Days Counter -->
+            <div onclick="openHistoryModal()" class="cursor-pointer flex flex-col items-center justify-center py-2 px-2 bg-amber-100/90 hover:bg-amber-200/70 rounded-xl border border-amber-300 text-center transition">
+                <span class="text-[11px] text-amber-900 font-medium">အဓိဋ္ဌာန် အောင်မြင်ရက်</span>
+                <span id="completedDaysDisplay" class="text-sm sm:text-base font-bold text-maroon-900">၀ ရက်</span>
+            </div>
+
+            <!-- Reset Today Button -->
+            <button onclick="openResetConfirm()" class="flex items-center justify-center space-x-1 py-3 px-2 bg-white hover:bg-red-50 active:bg-red-100 text-red-700 font-medium rounded-xl border border-red-200 shadow-sm transition active:scale-95 text-xs sm:text-sm">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                <span>အသစ်ပြန်စ</span>
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Custom Toast Notification -->
+    <div id="toastNotification" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-stone-900/95 text-amber-100 px-5 py-2.5 rounded-full shadow-xl text-xs sm:text-sm font-medium opacity-0 pointer-events-none transition-opacity duration-300 z-50 whitespace-nowrap border border-amber-500/40">
+        မှတ်သားပြီးပါပြီ
+    </div>
+
+    <!-- Custom Reset Confirmation Modal -->
+    <div id="resetConfirmModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-amber-200 space-y-4">
+            <div class="flex items-center space-x-3 text-red-600">
+                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-stone-800">အသစ်ပြန်စမည်လား?</h3>
+            </div>
+            <p class="text-sm text-stone-600 leading-relaxed">
+                ယနေ့ ရွတ်ဆိုမှတ်သားထားသော အရေအတွက်နှင့် ကြာမြင့်ချိန်တို့ကို <b>၀ (သုည)</b> သို့ ပြန်လည်သတ်မှတ်မည် ဖြစ်ပါသည်။
+            </p>
+            <div class="flex justify-end space-x-3 pt-2">
+                <button onclick="closeResetConfirm()" class="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-medium text-sm transition">
+                    မလုပ်တော့ပါ
+                </button>
+                <button onclick="confirmResetToday()" class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-medium text-sm shadow transition">
+                    ပြန်စမည်
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Modal (တစ်ရက်ပြီးတိုင်း တစ်ရက်မှတ်တမ်း) -->
+    <div id="historyModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-md w-full max-h-[82vh] flex flex-col shadow-2xl border border-amber-200 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-maroon-900 text-amber-50 px-5 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-amber-200">နေ့စဉ် အဓိဋ္ဌာန် မှတ်တမ်း</h3>
+                    <p class="text-xs text-amber-100/80">တစ်ရက်လျှင် ၃,၀၀၀ ကြိမ် နှုန်းဖြင့် မှတ်တမ်းတင်ထားမှု</p>
+                </div>
+                <button onclick="closeHistoryModal()" class="p-1.5 rounded-lg bg-maroon-800 hover:bg-amber-800 text-amber-200 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body (List of days) -->
+            <div id="historyListContainer" class="p-4 overflow-y-auto flex-1 space-y-2.5 bg-amber-50/40">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-white border-t border-amber-100 flex justify-between items-center">
+                <div class="text-xs text-stone-600">
+                    <p id="totalAllTimeCount" class="font-bold text-maroon-900">စုစုပေါင်း: ၀ ကြိမ်</p>
+                    <p id="totalCompletedDaysModal" class="text-[11px] text-emerald-700">ပြည့်မြောက်သည့်ရက်: ၀ ရက်</p>
+                </div>
+                <button onclick="closeHistoryModal()" class="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">
+                    ပိတ်မည်
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Constants
+        const DAILY_TARGET = 3000;
+        const MALA_SIZE = 108;
+        const DEFAULT_SEC_PER_REP = 4.0; // Average ~4 seconds for 3 lines of Saranagamana
+        const STORAGE_KEY = 'saranagamana_3000_tracker_v1';
+
+        // App State
+        let appData = {
+            soundEnabled: true,
+            // Format: { "YYYY-MM-DD": { count: 0, activeSeconds: 0 } }
+            history: {}
+        };
+
+        // Session pace tracking (rolling window of recent taps)
+        let recentTapTimestamps = [];
+        let lastTapTime = null;
+
+        // Burmese Digit Converter with comma formatting
+        const burmeseDigits = ['၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'];
+        function toBurmeseNum(num, useCommas = true) {
+            const formatted = useCommas ? Number(num).toLocaleString('en-US') : num.toString();
+            return formatted.split('').map(char => {
+                return /\d/.test(char) ? burmeseDigits[parseInt(char, 10)] : char;
+            }).join('');
+        }
+
+        // Format seconds into Burmese Hours & Minutes
+        function formatBurmeseDuration(totalSeconds) {
+            if (!totalSeconds || totalSeconds <= 0) return "၀ မိနစ်";
+            const totalMinutes = Math.round(totalSeconds / 60);
+            if (totalMinutes < 1) {
+                return `${toBurmeseNum(Math.round(totalSeconds), false)} စက္ကန့်`;
+            }
+            const hours = Math.floor(totalMinutes / 60);
+            const mins = totalMinutes % 60;
+            if (hours > 0 && mins > 0) {
+                return `${toBurmeseNum(hours, false)} နာရီ ${toBurmeseNum(mins, false)} မိနစ်`;
+            } else if (hours > 0) {
+                return `${toBurmeseNum(hours, false)} နာရီ`;
+            } else {
+                return `${toBurmeseNum(mins, false)} မိနစ်`;
+            }
+        }
+
+        // Get Local Date String (YYYY-MM-DD)
+        function getTodayKey() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Format Date in Burmese
+        function formatBurmeseDate(dateStr) {
+            const months = [
+                "ဇန်နဝါရီ", "ဖေဖော်ဝါရီ", "မတ်", "ဧပြီ", "မေ", "ဇွန်",
+                "ဇူလိုင်", "ဩဂုတ်", "စက်တင်ဘာ", "အောက်တိုဘာ", "နိုဝင်ဘာ", "ဒီဇင်ဘာ"
+            ];
+            const [y, m, d] = dateStr.split('-');
+            return `${toBurmeseNum(y, false)} ခုနှစ်၊ ${months[parseInt(m, 10) - 1]}လ ${toBurmeseNum(parseInt(d, 10), false)} ရက်`;
+        }
+
+        // Initialize Tone.js Synth
+        let chimeSynth = null;
+        let bellSynth = null;
+
+        function initAudio() {
+            if (!chimeSynth) {
+                chimeSynth = new Tone.Synth({
+                    oscillator: { type: 'sine' },
+                    envelope: { attack: 0.005, decay: 0.12, sustain: 0, release: 0.15 }
+                }).toDestination();
+                chimeSynth.volume.value = -10;
+            }
+            if (!bellSynth) {
+                bellSynth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: 'triangle' },
+                    envelope: { attack: 0.02, decay: 1.2, sustain: 0.1, release: 1.5 }
+                }).toDestination();
+                bellSynth.volume.value = -5;
+            }
+        }
+
+        function playTapSound(type) {
+            if (!appData.soundEnabled) return;
+            try {
+                if (Tone.context.state !== 'running') {
+                    Tone.start();
+                }
+                initAudio();
+                if (type === 'goal') {
+                    // 3,000 reached! Grand peaceful chord
+                    bellSynth.triggerAttackRelease(["C5", "E5", "G5", "B5", "C6"], "2n");
+                } else if (type === 'mala') {
+                    // Every 108 beads (1 Mala round) soft bell chime
+                    bellSynth.triggerAttackRelease(["E5", "G5", "C6"], "1n");
+                } else {
+                    // Regular single tap chime
+                    chimeSynth.triggerAttackRelease("G5", "32n");
+                }
+            } catch (e) {
+                console.warn("Audio skipped:", e);
+            }
+        }
+
+        // Ensure today's record exists
+        function ensureTodayRecord() {
+            const today = getTodayKey();
+            if (!appData.history[today] || typeof appData.history[today] === 'number') {
+                const oldCount = typeof appData.history[today] === 'number' ? appData.history[today] : 0;
+                appData.history[today] = {
+                    count: oldCount,
+                    activeSeconds: 0
+                };
+            }
+            return appData.history[today];
+        }
+
+        // Load Data
+        function loadData() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    appData.soundEnabled = parsed.soundEnabled !== undefined ? parsed.soundEnabled : true;
+                    appData.history = parsed.history || {};
+                }
+            } catch (e) {
+                console.error("Error loading data:", e);
+            }
+            ensureTodayRecord();
+        }
+
+        // Save Data
+        function saveData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+            } catch (e) {
+                console.error("Error saving data:", e);
+            }
+        }
+
+        // Calculate continuous chanting pace (seconds per repetition)
+        function getCurrentSecPerRep() {
+            if (recentTapTimestamps.length < 2) {
+                return DEFAULT_SEC_PER_REP;
+            }
+            // Calculate intervals between consecutive taps (ignore pauses > 25 seconds)
+            let validIntervals = [];
+            for (let i = 1; i < recentTapTimestamps.length; i++) {
+                const diffSec = (recentTapTimestamps[i] - recentTapTimestamps[i - 1]) / 1000;
+                if (diffSec >= 0.8 && diffSec <= 25) {
+                    validIntervals.push(diffSec);
+                }
+            }
+            if (validIntervals.length === 0) {
+                return DEFAULT_SEC_PER_REP;
+            }
+            const sum = validIntervals.reduce((a, b) => a + b, 0);
+            return sum / validIntervals.length;
+        }
+
+        // Trigger Visual Ripple on Tap
+        function triggerRipple() {
+            const container = document.getElementById('rippleContainer');
+            const ring = document.createElement('div');
+            ring.className = 'w-52 h-52 sm:w-58 sm:h-58 rounded-full border-4 border-amber-500 animate-pulse-ring absolute';
+            container.appendChild(ring);
+            setTimeout(() => {
+                ring.remove();
+            }, 600);
+        }
+
+        // Show Toast Message
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            toast.textContent = msg;
+            toast.classList.remove('opacity-0');
+            toast.classList.add('opacity-100');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+            }, 1800);
+        }
+
+        // Update All UI Elements
+        function updateUI() {
+            const today = getTodayKey();
+            const todayRecord = ensureTodayRecord();
+            const count = todayRecord.count;
+            const activeSeconds = todayRecord.activeSeconds || 0;
+
+            // Date display
+            document.getElementById('currentDateDisplay').textContent = formatBurmeseDate(today);
+
+            // Count display
+            document.getElementById('currentCountDisplay').textContent = toBurmeseNum(count);
+
+            // Mala Rounds (108 beads = 1 round)
+            const malaRounds = Math.floor(count / MALA_SIZE);
+            const malaRemainder = count % MALA_SIZE;
+            document.getElementById('malaRoundsText').textContent = 
+                `ပုတီးပတ်: ${toBurmeseNum(malaRounds)} ပတ် (${toBurmeseNum(malaRemainder)}/၁၀၈)`;
+
+            // Remaining text
+            const remainingEl = document.getElementById('remainingText');
+            const remainingCount = Math.max(DAILY_TARGET - count, 0);
+            if (count < DAILY_TARGET) {
+                remainingEl.textContent = `ကျန်ရှိ - ${toBurmeseNum(remainingCount)} ကြိမ်`;
+                remainingEl.className = "mt-1.5 px-3 py-0.5 rounded-full bg-black/25 text-xs text-amber-100";
+            } else if (count === DAILY_TARGET) {
+                remainingEl.textContent = `၃,၀၀၀ ကြိမ် ပြည့်မြောက်ပါပြီ ✓`;
+                remainingEl.className = "mt-1.5 px-3 py-0.5 rounded-full bg-emerald-600 text-xs text-white font-semibold";
+            } else {
+                const extra = count - DAILY_TARGET;
+                remainingEl.textContent = `အပိုထပ်ဆောင်း +${toBurmeseNum(extra)} ကြိမ်`;
+                remainingEl.className = "mt-1.5 px-3 py-0.5 rounded-full bg-emerald-600 text-xs text-white font-semibold";
+            }
+
+            // Pace & Duration Calculations
+            const secPerRep = getCurrentSecPerRep();
+            const repsPerMin = (60 / secPerRep).toFixed(1);
+            const isLivePace = recentTapTimestamps.length >= 2;
+
+            document.getElementById('paceStatusBadge').textContent = isLivePace ? "လက်ရှိ ရွတ်ဆိုနှုန်း" : "ခန့်မှန်း ပုံမှန်နှုန်း";
+            document.getElementById('paceStatusBadge').className = isLivePace 
+                ? "text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold"
+                : "text-[11px] px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900 font-medium";
+
+            document.getElementById('paceRateDisplay').textContent = `${toBurmeseNum(Math.round(repsPerMin))} ကြိမ်/မိနစ်`;
+            document.getElementById('secPerRepDisplay').textContent = `(၁ ခေါက် ~ ${toBurmeseNum(secPerRep.toFixed(1), false)} စက္ကန့်)`;
+
+            // Total duration for 3,000 reps at current continuous pace
+            const total3000Seconds = DAILY_TARGET * secPerRep;
+            document.getElementById('totalEstTimeDisplay').textContent = formatBurmeseDuration(total3000Seconds);
+
+            // Remaining duration for remaining reps
+            const remainingSeconds = remainingCount * secPerRep;
+            document.getElementById('remainingEstTimeDisplay').textContent = remainingCount === 0 
+                ? "ပြီးစီးပါပြီ ✓" 
+                : formatBurmeseDuration(remainingSeconds);
+
+            document.getElementById('elapsedTimeDisplay').textContent = `ရွတ်ပြီးကြာချိန်: ${formatBurmeseDuration(activeSeconds)}`;
+
+            // Progress Ring Calculation (Circumference = 2 * PI * 112 ≈ 703.71)
+            const circle = document.getElementById('progressRing');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const cappedProgress = Math.min(count / DAILY_TARGET, 1);
+            const offset = circumference - cappedProgress * circumference;
+            circle.style.strokeDashoffset = offset;
+
+            // Change ring color to emerald green when 3,000 is reached
+            if (count >= DAILY_TARGET) {
+                circle.classList.remove('text-amber-600');
+                circle.classList.add('text-emerald-600');
+                document.getElementById('goalCompletedBanner').classList.remove('hidden');
+            } else {
+                circle.classList.remove('text-emerald-600');
+                circle.classList.add('text-amber-600');
+                document.getElementById('goalCompletedBanner').classList.add('hidden');
+            }
+
+            // Completed Days Count (Days with >= 3,000)
+            let completedDays = 0;
+            Object.values(appData.history).forEach(rec => {
+                const c = typeof rec === 'number' ? rec : (rec.count || 0);
+                if (c >= DAILY_TARGET) completedDays++;
+            });
+            document.getElementById('completedDaysDisplay').textContent = `${toBurmeseNum(completedDays)} ရက်`;
+
+            // Sound Icon State
+            if (appData.soundEnabled) {
+                document.getElementById('soundOnIcon').classList.remove('hidden');
+                document.getElementById('soundOffIcon').classList.add('hidden');
+            } else {
+                document.getElementById('soundOnIcon').classList.add('hidden');
+                document.getElementById('soundOffIcon').classList.remove('hidden');
+            }
+        }
+
+        // Increment Counter (+1)
+        function incrementCount() {
+            const now = Date.now();
+            const todayRecord = ensureTodayRecord();
+
+            // Calculate elapsed time since last tap (cap at 25 seconds if user took a break)
+            if (lastTapTime !== null) {
+                const diffSec = (now - lastTapTime) / 1000;
+                if (diffSec > 0 && diffSec <= 25) {
+                    todayRecord.activeSeconds += diffSec;
+                } else {
+                    // Add estimated single rep duration when resuming after a break
+                    todayRecord.activeSeconds += getCurrentSecPerRep();
+                }
+            } else {
+                todayRecord.activeSeconds += DEFAULT_SEC_PER_REP;
+            }
+            lastTapTime = now;
+
+            // Keep last 15 tap timestamps for accurate rolling pace calculation
+            recentTapTimestamps.push(now);
+            if (recentTapTimestamps.length > 15) {
+                recentTapTimestamps.shift();
+            }
+
+            todayRecord.count += 1;
+            const newCount = todayRecord.count;
+
+            saveData();
+            updateUI();
+            triggerRipple();
+
+            // Check milestones
+            const isGoalReached = (newCount === DAILY_TARGET);
+            const isMalaReached = (newCount > 0 && newCount % MALA_SIZE === 0);
+
+            // Haptic feedback on mobile
+            if (navigator.vibrate) {
+                if (isGoalReached) {
+                    navigator.vibrate([120, 60, 120, 60, 250]);
+                } else if (isMalaReached) {
+                    navigator.vibrate([80, 40, 80]);
+                } else {
+                    navigator.vibrate(25);
+                }
+            }
+
+            if (isGoalReached) {
+                playTapSound('goal');
+                showToast("သာဓု! ယနေ့အတွက် ၃,၀၀၀ ကြိမ် ပြည့်ပါပြီ");
+            } else if (isMalaReached) {
+                playTapSound('mala');
+                const rounds = newCount / MALA_SIZE;
+                showToast(`ပုတီး ${toBurmeseNum(rounds)} ပတ် (${toBurmeseNum(newCount)} ကြိမ်) ပြည့်ပါပြီ`);
+            } else {
+                playTapSound('tap');
+                showToast(`${toBurmeseNum(newCount)} ကြိမ်မြောက် မှတ်သားပြီးပါပြီ`);
+            }
+        }
+
+        // Decrement Counter (-1)
+        function decrementCount() {
+            const todayRecord = ensureTodayRecord();
+            if (todayRecord.count > 0) {
+                todayRecord.count -= 1;
+                if (recentTapTimestamps.length > 0) {
+                    recentTapTimestamps.pop();
+                }
+                saveData();
+                updateUI();
+                showToast("၁ ကြိမ် ပြန်လည်နုတ်ပယ်ပြီးပါပြီ");
+            } else {
+                showToast("၀ ကြိမ် ဖြစ်နေပါသည်");
+            }
+        }
+
+        // Toggle Sound
+        function toggleSound() {
+            appData.soundEnabled = !appData.soundEnabled;
+            saveData();
+            updateUI();
+            showToast(appData.soundEnabled ? "အသံ ဖွင့်ထားပါသည်" : "အသံ ပိတ်ထားပါသည်");
+        }
+
+        // Reset Confirmation Modal Controls
+        function openResetConfirm() {
+            const todayRecord = ensureTodayRecord();
+            if (todayRecord.count === 0) {
+                showToast("ယနေ့အတွက် ၀ ကြိမ် ဖြစ်နေပါသည်");
+                return;
+            }
+            const modal = document.getElementById('resetConfirmModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeResetConfirm() {
+            const modal = document.getElementById('resetConfirmModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function confirmResetToday() {
+            const today = getTodayKey();
+            appData.history[today] = { count: 0, activeSeconds: 0 };
+            recentTapTimestamps = [];
+            lastTapTime = null;
+            saveData();
+            updateUI();
+            closeResetConfirm();
+            showToast("ယနေ့အတွက် အသစ်ပြန်စလိုက်ပါပြီ");
+        }
+
+        // History Modal Controls (တစ်ရက်ပြီးတိုင်း တစ်ရက်မှတ်တမ်း)
+        function openHistoryModal() {
+            const container = document.getElementById('historyListContainer');
+            container.innerHTML = '';
+
+            // Sort dates descending (newest first)
+            const sortedDates = Object.keys(appData.history).sort((a, b) => b.localeCompare(a));
+            let totalAllTime = 0;
+            let completedDaysCount = 0;
+
+            if (sortedDates.length === 0) {
+                container.innerHTML = `<p class="text-center text-stone-500 py-8 text-sm">မှတ်တမ်း မရှိသေးပါ</p>`;
+            } else {
+                sortedDates.forEach((dateKey, index) => {
+                    const rec = appData.history[dateKey];
+                    const count = typeof rec === 'number' ? rec : (rec.count || 0);
+                    const activeSec = typeof rec === 'object' ? (rec.activeSeconds || 0) : 0;
+
+                    totalAllTime += count;
+                    const isComplete = count >= DAILY_TARGET;
+                    if (isComplete) completedDaysCount++;
+                    const isToday = dateKey === getTodayKey();
+
+                    const item = document.createElement('div');
+                    item.className = `p-3.5 rounded-xl border flex items-center justify-between ${
+                        isComplete 
+                        ? 'bg-emerald-50/95 border-emerald-300 shadow-xs' 
+                        : 'bg-white border-amber-200/80'
+                    }`;
+
+                    item.innerHTML = `
+                        <div class="space-y-0.5">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-bold text-sm text-stone-800">${formatBurmeseDate(dateKey)}</span>
+                                ${isToday ? '<span class="px-2 py-0.5 text-[10px] bg-amber-200 text-amber-900 rounded-full font-bold">ယနေ့</span>' : ''}
+                            </div>
+                            <p class="text-xs ${isComplete ? 'text-emerald-700 font-semibold' : 'text-stone-500'}">
+                                ${isComplete ? '✓ အဓိဋ္ဌာန် ၃,၀၀၀ ပြည့်မြောက်သည်' : `ပြည့်ရန် ${toBurmeseNum(DAILY_TARGET - count)} ကြိမ် လိုသေးသည်`}
+                            </p>
+                            <p class="text-[11px] text-stone-400">
+                                ရွတ်ဆိုကြာမြင့်ချိန်: ${formatBurmeseDuration(activeSec)} • ပုတီး ${toBurmeseNum(Math.floor(count / MALA_SIZE))} ပတ်
+                            </p>
+                        </div>
+                        <div class="text-right pl-2">
+                            <span class="text-lg font-bold ${isComplete ? 'text-emerald-700' : 'text-amber-700'}">
+                                ${toBurmeseNum(count)}
+                            </span>
+                            <span class="block text-[11px] text-stone-500">/ ၃,၀၀၀</span>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+
+            document.getElementById('totalAllTimeCount').textContent = `စုစုပေါင်း ရွတ်ဆိုမှု: ${toBurmeseNum(totalAllTime)} ကြိမ်`;
+            document.getElementById('totalCompletedDaysModal').textContent = `အဓိဋ္ဌာန် ပြည့်မြောက်သည့်ရက်: ${toBurmeseNum(completedDaysCount)} ရက်`;
+
+            const modal = document.getElementById('historyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeHistoryModal() {
+            const modal = document.getElementById('historyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Automatically detect midnight date change for daily tracking
+        setInterval(() => {
+            const today = getTodayKey();
+            if (!appData.history[today]) {
+                ensureTodayRecord();
+                recentTapTimestamps = [];
+                lastTapTime = null;
+                saveData();
+                updateUI();
+            }
+        }, 20000);
+
+        // Initialize on Page Load
+        window.onload = function() {
+            loadData();
+            updateUI();
+        };
+    </script>
+</body>
+</html>
