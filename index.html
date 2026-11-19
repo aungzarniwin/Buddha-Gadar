@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>သရဏဂုံသုံးပါး အဓိဋ္ဌာန် ၃၀၀၀ ကြိမ် ရွတ်ဆိုမှု မှတ်တမ်း</title>
+    <title>သရဏဂုံသုံးပါး အဓိဋ္ဌာန် ၈၄၀၀၀ (တစ်ရက် ၃၀၀၀ နှုန်း)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Padauk & Noto Sans Myanmar -->
@@ -81,26 +81,34 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-base sm:text-lg font-bold tracking-wide text-amber-200 leading-tight">အဓိဋ္ဌာန် ၃,၀၀၀ ကြိမ်</h1>
-                    <p id="currentDateDisplay" class="text-xs text-amber-100/80">ရက်စွဲ...</p>
+                    <h1 class="text-sm sm:text-base font-bold tracking-wide text-amber-200 leading-tight">အဓိဋ္ဌာန် ၈၄,၀၀၀</h1>
+                    <p id="currentDateDisplay" class="text-[11px] text-amber-100/80">ရက်စွဲ...</p>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-1.5">
                 <!-- Sound Toggle Button -->
-                <button id="soundToggleBtn" onclick="toggleSound()" class="p-2.5 rounded-full bg-maroon-800 hover:bg-amber-800/60 text-amber-200 transition active:scale-95" title="အသံ အဖွင့်/အပိတ်">
-                    <svg id="soundOnIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button id="soundToggleBtn" onclick="toggleSound()" class="p-2 rounded-full bg-maroon-800 hover:bg-amber-800/60 text-amber-200 transition active:scale-95" title="အသံ အဖွင့်/အပိတ်">
+                    <svg id="soundOnIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
                     </svg>
-                    <svg id="soundOffIcon" class="w-5 h-5 hidden text-amber-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg id="soundOffIcon" class="w-4 h-4 hidden text-amber-400/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
                     </svg>
                 </button>
 
+                <!-- Benefits Modal Trigger (ကောင်းကျိုးများ) -->
+                <button onclick="openBenefitsModal()" class="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-amber-600/90 hover:bg-amber-600 text-white transition active:scale-95 text-xs font-medium border border-amber-400/50" title="ရရှိမည့် ကောင်းကျိုးများ">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <span>အကျိုးကျေးဇူး</span>
+                </button>
+
                 <!-- History Modal Trigger -->
-                <button onclick="openHistoryModal()" class="flex items-center space-x-1.5 px-3 py-2 rounded-full bg-maroon-800 hover:bg-amber-800/60 text-amber-200 transition active:scale-95 text-xs font-medium border border-amber-500/30" title="နေ့စဉ်မှတ်တမ်းများ">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button onclick="openHistoryModal()" class="flex items-center space-x-1 px-2.5 py-1.5 rounded-full bg-maroon-800 hover:bg-amber-800/60 text-amber-200 transition active:scale-95 text-xs font-medium border border-amber-500/30" title="နေ့စဉ်မှတ်တမ်းများ">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                     </svg>
                     <span>မှတ်တမ်း</span>
@@ -110,49 +118,41 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-1 w-full max-w-lg mx-auto px-4 py-4 flex flex-col items-center justify-between space-y-4">
+    <main class="flex-1 w-full max-w-lg mx-auto px-4 py-3 flex flex-col items-center justify-between space-y-3">
 
-        <!-- Mantra Display Card -->
-        <section class="w-full bg-white/95 backdrop-blur-sm border-2 border-amber-300/80 rounded-2xl p-4 shadow-md relative overflow-hidden">
-            <!-- Decorative corner accents -->
-            <div class="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-amber-500/40 rounded-tl-xl"></div>
-            <div class="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-amber-500/40 rounded-tr-xl"></div>
-            <div class="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-amber-500/40 rounded-bl-xl"></div>
-            <div class="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-amber-500/40 rounded-br-xl"></div>
-
-            <div class="text-center space-y-1.5">
-                <span class="inline-block px-3 py-0.5 bg-amber-100 text-amber-800 text-[11px] font-semibold rounded-full border border-amber-300">
-                    သရဏဂုံသုံးပါး ဂါထာတော်
+        <!-- 84,000 Grand Vow Progress Card (၈၄,၀၀၀ အဓိဋ္ဌာန် ခရီးစဉ် မှတ်တမ်း) -->
+        <section class="w-full bg-gradient-to-r from-maroon-900 to-maroon-800 text-amber-50 rounded-2xl p-3.5 shadow-md border border-amber-500/40">
+            <div class="flex items-center justify-between text-xs mb-1.5">
+                <span class="font-bold text-amber-200 flex items-center space-x-1">
+                    <span>🪷 အဓိဋ္ဌာန် ၈၄,၀၀၀ (၂၈ ရက် စီမံကိန်း)</span>
                 </span>
-                <p class="text-lg sm:text-xl font-bold text-maroon-900 leading-relaxed py-1 tracking-wide">
-                    ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ<br>
-                    ဓမ္မံ သရဏံ ဂစ္ဆာမိ<br>
-                    သံဃံ သရဏံ ဂစ္ဆာမိ
-                </p>
+                <span id="grandTotalText" class="font-bold text-amber-300">၀ / ၈၄,၀၀၀ ကြိမ်</span>
+            </div>
+            
+            <!-- Overall Progress Bar -->
+            <div class="w-full bg-maroon-950/80 rounded-full h-2.5 overflow-hidden border border-amber-500/30 mb-2">
+                <div id="grandProgressBar" class="bg-gradient-to-r from-amber-400 to-emerald-400 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <!-- Days Completed & Remaining -->
+            <div class="grid grid-cols-3 gap-2 text-center text-[11px] bg-black/20 rounded-xl p-2">
+                <div>
+                    <span class="text-amber-200/80 block">ပြီးစီးသည့်ရက်</span>
+                    <span id="grandCompletedDaysText" class="font-bold text-emerald-300 text-xs sm:text-sm">၀ ရက်</span>
+                </div>
+                <div class="border-x border-amber-500/20">
+                    <span class="text-amber-200/80 block">ကျန်ရှိသည့်ရက်</span>
+                    <span id="grandRemainingDaysText" class="font-bold text-amber-200 text-xs sm:text-sm">၂၈ ရက်</span>
+                </div>
+                <div>
+                    <span class="text-amber-200/80 block">ကျန်ရှိအကြိမ်</span>
+                    <span id="grandRemainingCountText" class="font-bold text-amber-100 text-xs sm:text-sm">၈၄,၀၀၀</span>
+                </div>
             </div>
         </section>
 
-        <!-- Pace & Duration Estimation Card (ဆက်တိုက်ရွတ်ဆိုနှုန်းနှင့် ကြာမြင့်ချိန် တွက်ချက်မှု) -->
-        <section class="w-full bg-amber-900/5 border border-amber-300/90 rounded-2xl p-3.5 shadow-xs">
-            <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-bold text-maroon-900 flex items-center space-x-1.5">
-                    <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>ဆက်တိုက်ရွတ်ဆိုနှုန်းနှင့် ကြာမြင့်ချိန် ခန့်မှန်းချက်</span>
-                </span>
-                <span id="paceStatusBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900 font-medium">
-                    ပုံမှန်နှုန်း
-                </span>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 text-center">
-                <!-- Current Rate -->
-                <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
-                    <p class="text-[11px] text-stone-500">ရွတ်ဆိုနှုန်း</p>
-                    <p id="paceRateDisplay" class="text-sm sm:text-base font-bold text-amber-800 mt-0.5">၁၅ ကြိမ်/မိနစ်</p>
-                    <p id="secPerRepDisplay" class="text-[10px] text-stone-400">(၁ ခေါက် ~ ၄.၀ စက္ကန့်)</p>
-                </div>
+        <!-- Mantra Display Card -->
+        <section class="w-full bg-white/95 backdrop-blur-sm border-2 border-amber-300/80 rounded-2xl p-3.5 shadow-sm relative overflow-hidden">
 
                 <!-- Total Time for 3,000 -->
                 <div class="bg-white/90 rounded-xl p-2 border border-amber-200/80">
@@ -225,9 +225,9 @@
             </button>
 
             <!-- Completed Days Counter -->
-            <div onclick="openHistoryModal()" class="cursor-pointer flex flex-col items-center justify-center py-2 px-2 bg-amber-100/90 hover:bg-amber-200/70 rounded-xl border border-amber-300 text-center transition">
-                <span class="text-[11px] text-amber-900 font-medium">အဓိဋ္ဌာန် အောင်မြင်ရက်</span>
-                <span id="completedDaysDisplay" class="text-sm sm:text-base font-bold text-maroon-900">၀ ရက်</span>
+            <div onclick="openBenefitsModal()" class="cursor-pointer flex flex-col items-center justify-center py-2 px-2 bg-amber-100/90 hover:bg-amber-200/70 rounded-xl border border-amber-300 text-center transition">
+                <span class="text-[11px] text-amber-900 font-medium">အဓိဋ္ဌာန် ကောင်းကျိုး</span>
+                <span class="text-xs sm:text-sm font-bold text-maroon-900 underline decoration-amber-500">ဖတ်ရှုရန် 🪷</span>
             </div>
 
             <!-- Reset Today Button -->
@@ -295,8 +295,8 @@
             <!-- Modal Footer -->
             <div class="p-4 bg-white border-t border-amber-100 flex justify-between items-center">
                 <div class="text-xs text-stone-600">
-                    <p id="totalAllTimeCount" class="font-bold text-maroon-900">စုစုပေါင်း: ၀ ကြိမ်</p>
-                    <p id="totalCompletedDaysModal" class="text-[11px] text-emerald-700">ပြည့်မြောက်သည့်ရက်: ၀ ရက်</p>
+                    <p id="totalAllTimeCount" class="font-bold text-maroon-900">စုစုပေါင်း: ၀ / ၈၄,၀၀၀ ကြိမ်</p>
+                    <p id="totalCompletedDaysModal" class="text-[11px] text-emerald-700">ပြီးစီးရက်: ၀ ရက် | ကျန်ရှိရက်: ၂၈ ရက်</p>
                 </div>
                 <button onclick="closeHistoryModal()" class="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">
                     ပိတ်မည်
@@ -305,10 +305,84 @@
         </div>
     </div>
 
+    <!-- Benefits Modal (သရဏဂုံ ၈၄,၀၀၀ အဓိဋ္ဌာန် ကောင်းကျိုးတရားများ) -->
+    <div id="benefitsModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-md w-full max-h-[85vh] flex flex-col shadow-2xl border border-amber-200 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-maroon-900 to-amber-900 text-amber-50 px-5 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-base sm:text-lg font-bold text-amber-200">သရဏဂုံ အဓိဋ္ဌာန် ကောင်းကျိုးတရားများ</h3>
+                    <p class="text-xs text-amber-100/80">၈၄,၀၀၀ ကြိမ် ပွားများရွတ်ဆိုခြင်း၏ အကျိုးကျေးဇူး</p>
+                </div>
+                <button onclick="closeBenefitsModal()" class="p-1.5 rounded-lg bg-maroon-800 hover:bg-amber-800 text-amber-200 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-4 overflow-y-auto flex-1 space-y-3 bg-amber-50/50 text-sm text-stone-700 leading-relaxed">
+                <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-xs space-y-1">
+                    <h4 class="font-bold text-maroon-900 flex items-center space-x-1.5">
+                        <span>🛡️</span>
+                        <span>၁။ ဘေးအန္တရာယ် အပေါင်းမှ ကင်းဝေးခြင်း</span>
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                        ရတနာသုံးပါးကို ဦးထိပ်ထား၍ နေ့စဉ် အဓိဋ္ဌာန်ဖြင့် ပွားများခြင်းကြောင့် မကောင်းသော အတိတ်နိမိတ်များ၊ ဘေးဥပဒ်အန္တရာယ်များနှင့် မမြင်အပ်သော ပယောဂအနှောင့်အယှက်များ ကင်းစင်စေပါသည်။
+                    </p>
+                </div>
+
+                <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-xs space-y-1">
+                    <h4 class="font-bold text-maroon-900 flex items-center space-x-1.5">
+                        <span>🧘</span>
+                        <span>၂။ စိတ်တည်ငြိမ်အေးချမ်းပြီး သမာဓိအားကောင်းခြင်း</span>
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                        ၂၈ ရက်တိုင်တိုင် နေ့စဉ် ၃,၀၀၀ ကြိမ် မပျက်မကွက် ရွတ်ဆိုခြင်းကြောင့် စိတ်ပျံ့လွင့်မှု နည်းပါးလာပြီး ဉာဏ်ပညာ ထက်မြက်ခြင်း၊ သတိနှင့် သမာဓိ ခိုင်မြဲခြင်းတို့ကို ရရှိစေပါသည်။
+                    </p>
+                </div>
+
+                <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-xs space-y-1">
+                    <h4 class="font-bold text-maroon-900 flex items-center space-x-1.5">
+                        <span>✨</span>
+                        <span>၃။ ကြံစည်သမျှ လုပ်ငန်းဆောင်တာများ အောင်မြင်ခြင်း</span>
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                        သရဏဂုံ တည်မြဲသူအား နတ်ကောင်းနတ်မြတ်တို့က စောင့်ရှောက်ကြသဖြင့် အခက်အခဲ အကျပ်အတည်းများ ပြေလည်ခြင်း၊ လာဘ်လာဘ ရွှင်လန်းခြင်းနှင့် လိုအင်ဆန္ဒများ ပြည့်ဝစေပါသည်။
+                    </p>
+                </div>
+
+                <div class="bg-white p-3.5 rounded-xl border border-amber-200/80 shadow-xs space-y-1">
+                    <h4 class="font-bold text-maroon-900 flex items-center space-x-1.5">
+                        <span>🌸</span>
+                        <span>၄။ သုဂတိဘုံဘဝသို့ လားရောက်ရခြင်း</span>
+                    </h4>
+                    <p class="text-xs text-stone-600">
+                        သရဏဂုံသုံးပါး၌ သက်ဝင်ယုံကြည်မှု ခိုင်မြဲသူသည် ဤဘဝ၌သာမက နောင်တမလွန်ဘဝ၌လည်း အပါယ်လေးပါးသို့ မကျရောက်ဘဲ ကောင်းမြတ်သော သုဂတိဘုံဘဝသို့သာ ရောက်ရှိစေနိုင်ပါသည်။
+                    </p>
+                </div>
+
+                <div class="bg-amber-100/80 p-3 rounded-xl border border-amber-300 text-xs text-maroon-900 font-medium text-center">
+                    “ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ၊ ဓမ္မံ သရဏံ ဂစ္ဆာမိ၊ သံဃံ သရဏံ ဂစ္ဆာမိ” ဟူသော သရဏဂုံတန်ခိုးကြောင့် ကောင်းကျိုးလိုရာ ပြည့်စုံပါစေ။
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-3.5 bg-white border-t border-amber-100 flex justify-end">
+                <button onclick="closeBenefitsModal()" class="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition">
+                    သာဓုခေါ်ဆို ပိတ်မည်
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript Logic -->
     <script>
         // Constants
+        const GRAND_TARGET = 84000;
         const DAILY_TARGET = 3000;
+        const TOTAL_TARGET_DAYS = Math.ceil(GRAND_TARGET / DAILY_TARGET); // 28 days
         const MALA_SIZE = 108;
         const DEFAULT_SEC_PER_REP = 4.0; // Average ~4 seconds for 3 lines of Saranagamana
         const STORAGE_KEY = 'saranagamana_3000_tracker_v1';
@@ -562,24 +636,24 @@
             const offset = circumference - cappedProgress * circumference;
             circle.style.strokeDashoffset = offset;
 
-            // Change ring color to emerald green when 3,000 is reached
-            if (count >= DAILY_TARGET) {
-                circle.classList.remove('text-amber-600');
-                circle.classList.add('text-emerald-600');
-                document.getElementById('goalCompletedBanner').classList.remove('hidden');
-            } else {
-                circle.classList.remove('text-emerald-600');
-                circle.classList.add('text-amber-600');
-                document.getElementById('goalCompletedBanner').classList.add('hidden');
-            }
-
-            // Completed Days Count (Days with >= 3,000)
+            // Completed Days & Grand 84,000 Calculations
             let completedDays = 0;
+            let grandTotalCount = 0;
             Object.values(appData.history).forEach(rec => {
                 const c = typeof rec === 'number' ? rec : (rec.count || 0);
+                grandTotalCount += c;
                 if (c >= DAILY_TARGET) completedDays++;
             });
-            document.getElementById('completedDaysDisplay').textContent = `${toBurmeseNum(completedDays)} ရက်`;
+
+            const remainingDays = Math.max(TOTAL_TARGET_DAYS - completedDays, 0);
+            const grandRemainingCount = Math.max(GRAND_TARGET - grandTotalCount, 0);
+            const grandPercentage = Math.min((grandTotalCount / GRAND_TARGET) * 100, 100);
+
+            document.getElementById('grandTotalText').textContent = `${toBurmeseNum(grandTotalCount)} / ၈၄,၀၀၀ ကြိမ်`;
+            document.getElementById('grandProgressBar').style.width = `${grandPercentage}%`;
+            document.getElementById('grandCompletedDaysText').textContent = `${toBurmeseNum(completedDays)} ရက်`;
+            document.getElementById('grandRemainingDaysText').textContent = remainingDays === 0 ? "ပြည့်မြောက်ပြီ ✓" : `${toBurmeseNum(remainingDays)} ရက်`;
+            document.getElementById('grandRemainingCountText').textContent = grandRemainingCount === 0 ? "၀ ကြိမ်" : `${toBurmeseNum(grandRemainingCount)}`;
 
             // Sound Icon State
             if (appData.soundEnabled) {
@@ -744,22 +818,9 @@
                                 ${isComplete ? '✓ အဓိဋ္ဌာန် ၃,၀၀၀ ပြည့်မြောက်သည်' : `ပြည့်ရန် ${toBurmeseNum(DAILY_TARGET - count)} ကြိမ် လိုသေးသည်`}
                             </p>
                             <p class="text-[11px] text-stone-400">
-                                ရွတ်ဆိုကြာမြင့်ချိန်: ${formatBurmeseDuration(activeSec)} • ပုတီး ${toBurmeseNum(Math.floor(count / MALA_SIZE))} ပတ်
-                            </p>
-                        </div>
-                        <div class="text-right pl-2">
-                            <span class="text-lg font-bold ${isComplete ? 'text-emerald-700' : 'text-amber-700'}">
-                                ${toBurmeseNum(count)}
-                            </span>
-                            <span class="block text-[11px] text-stone-500">/ ၃,၀၀၀</span>
-                        </div>
-                    `;
-                    container.appendChild(item);
-                });
-            }
-
-            document.getElementById('totalAllTimeCount').textContent = `စုစုပေါင်း ရွတ်ဆိုမှု: ${toBurmeseNum(totalAllTime)} ကြိမ်`;
-            document.getElementById('totalCompletedDaysModal').textContent = `အဓိဋ္ဌာန် ပြည့်မြောက်သည့်ရက်: ${toBurmeseNum(completedDaysCount)} ရက်`;
+            const remainingDaysCount = Math.max(TOTAL_TARGET_DAYS - completedDaysCount, 0);
+            document.getElementById('totalAllTimeCount').textContent = `စုစုပေါင်း: ${toBurmeseNum(totalAllTime)} / ၈၄,၀၀၀ ကြိမ်`;
+            document.getElementById('totalCompletedDaysModal').textContent = `ပြီးစီးရက်: ${toBurmeseNum(completedDaysCount)} ရက် | ကျန်ရှိရက်: ${toBurmeseNum(remainingDaysCount)} ရက်`;
 
             const modal = document.getElementById('historyModal');
             modal.classList.remove('hidden');
@@ -768,6 +829,19 @@
 
         function closeHistoryModal() {
             const modal = document.getElementById('historyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Benefits Modal Controls (ကောင်းကျိုးတရားများ)
+        function openBenefitsModal() {
+            const modal = document.getElementById('benefitsModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeBenefitsModal() {
+            const modal = document.getElementById('benefitsModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
